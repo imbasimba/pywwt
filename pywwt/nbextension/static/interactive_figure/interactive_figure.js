@@ -141,7 +141,7 @@ function loadWwtFigure() {
 
     wwtInitialState['layers'].forEach(function (layerInfo) {
         if (layerInfo['layer_type'] == 'image') {
-            loadImageLayer(layerInfo);
+            addImageSetLayer(layerInfo);
         }
         else if (layerInfo['layer_type'] == 'table') {
             loadTableLayer(layerInfo);
@@ -163,7 +163,7 @@ function loadWwtFigure() {
 }
 
 
-function loadImageLayer(layerInfo) {
+function addImageSetLayer(layerInfo) {
     var id = layerInfo['id'];
     var url = 'data/' + id + '.fits';
     var onFitsLoad = function (layer) {
@@ -172,7 +172,7 @@ function loadImageLayer(layerInfo) {
                                stretchInfo['vmin'],
                                stretchInfo['vmax']);
         wwtLayer.set_colorMapperName(stretchInfo['cmap']);
-        layer.getFitsImage().transparentBlack = false;
+        layer.get_imageSet().get_fitsProperties().transparentBlack = false;
         var settings = layerInfo['settings'];
         for (name in settings) {
             wwt_apply_json_message(wwt, {
